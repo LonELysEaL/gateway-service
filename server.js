@@ -59,6 +59,49 @@ app.get("/protected", checkAuth, (req, res) => {
 
 });
 
+app.get("/test-protected", (req, res) => {
+
+  res.send(`
+
+    <h2>Test Protected Route</h2>
+
+    <textarea id="token"
+      rows="10"
+      cols="80"></textarea>
+
+    <br><br>
+
+    <button onclick="test()">
+      TEST PROTECTED
+    </button>
+
+    <pre id="result"></pre>
+
+    <script>
+
+      async function test() {
+
+        const token =
+          document.getElementById('token').value;
+
+        const response = await fetch('/protected', {
+          headers: {
+            authorization: token
+          }
+        });
+
+        const text = await response.text();
+
+        document.getElementById('result').innerText =
+          text;
+      }
+
+    </script>
+
+  `);
+
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

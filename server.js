@@ -134,6 +134,8 @@ app.use(async (req, res) => {
 
 });
 
+app.use(forwardHandler);
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

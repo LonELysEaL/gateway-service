@@ -102,6 +102,38 @@ app.get("/test-protected", (req, res) => {
 
 });
 
+app.use(checkAuth);
+
+app.use(async (req, res) => {
+
+  try {
+
+    const response = await axios({
+
+      method: req.method,
+
+      url:
+        MAIN_URL + req.originalUrl,
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      data: req.body
+
+    });
+
+    res.send(response.data);
+
+  } catch (err) {
+
+    console.log(err.message);
+
+    res.status(500).send("Forward Error");
+  }
+
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
